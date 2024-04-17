@@ -38,30 +38,15 @@ public class UDP {
         jsonPacket.put("initialConnect",initialConnect);
         this.sendPacket(SerializeObject(jsonPacket));
     }
-    public DatagramPacket recivePacket(int count) throws IOException  {
-        try{
-         byte[] buf = new  byte[size];
-         DatagramPacket packet = new DatagramPacket(buf,buf.length, address, port);
-         socket.receive(packet);
-         return packet;
-        }
-        catch (SocketTimeoutException e){
-        count+=1;
-        if (count >= MAX_CONNECTION_RETRY ) throw new RuntimeException(e);
-        System.out.println("Сервер не отвечает");
-        return recivePacket(count);
-    }
-    }
-    public DatagramPacket recivePacket() throws IOException  {
-        try{
+
+    public DatagramPacket recivePacket() throws IOException,SocketTimeoutException  {
+
             byte[] buf = new  byte[size];
             DatagramPacket packet = new DatagramPacket(buf,buf.length, address, port);
             socket.receive(packet);
             return packet;
-        }
-        catch (SocketTimeoutException e){
-            return recivePacket(1);
-        }
+
+
     }
     public JSONObject initialConnect(int count) throws IOException, ClassNotFoundException {
         try{

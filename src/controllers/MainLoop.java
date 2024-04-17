@@ -7,6 +7,7 @@ import utilities.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -51,10 +52,16 @@ public class MainLoop extends ControlLoop{
                 } else if (commandName.equals("help")) {
                     this.commands.get(commandName).execute(commandInput);
                 } else {
-                    this.commands.get(commandName).execute(commandInput);
-                    JSONObject response =  Serialization.DeserializeObject(udp.recivePacket().getData());
-                    System.out.println(response.get("responseText"));
-                    printIndication();
+                    try {
+                     this.commands.get(commandName).execute(commandInput);
+                     JSONObject response =  Serialization.DeserializeObject(udp.recivePacket().getData());
+                     System.out.println(response.get("responseText"));
+                     printIndication();
+                    }
+                    catch (SocketTimeoutException e){
+                        System.out.print("Сервер не отвечает!");
+                        printIndication();
+                    }
                 }
             }
             catch (ArrayIndexOutOfBoundsException e){
@@ -71,6 +78,7 @@ public class MainLoop extends ControlLoop{
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+
         }
         return work;
     }
