@@ -59,7 +59,7 @@ public class MainLoop extends ControlLoop{
                      printIndication();
                     }
                     catch (SocketTimeoutException e){
-                        System.out.print("Сервер не отвечает!");
+                        System.out.println("Сервер не отвечает!");
                         printIndication();
                     }
                 }
