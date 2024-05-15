@@ -27,7 +27,7 @@ public class Clear extends Command{
      * */
     @Override
     public boolean execute(String[] arguments) throws IOException {
-        udp.sendJSONPacket(serverCommands.get(this.getName()),null,null,false);
+        udp.sendJSONPacket(serverCommands.get(this.getName()),null,new JSONObject(),false);
         return true;
     }
 }

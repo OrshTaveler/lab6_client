@@ -15,12 +15,13 @@ public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
          Scanner scanner = new Scanner(System.in);
-            UDP udp = new UDP(4555,"localhost");
+
             JSONObject serverCommands;
             Asker asker = new Asker(scanner);
+            UDP udp = new UDP(4555,"localhost",asker);
             Map<String, Command> commands  = new LinkedHashMap<>();
 
-            JSONObject initialResponse  = udp.initialConnect(0);
+            JSONObject initialResponse  = udp.initialConnect(0,udp);
             serverCommands = (JSONObject) initialResponse.get("data");
 
 
@@ -34,6 +35,8 @@ public class Main {
             commands.put("remove_first", new RemoveFirst(udp,asker,serverCommands));
             commands.put("remove_any_by_weapon_type", new RemoveAnyByWeaponType(udp,asker,serverCommands));
             commands.put("filter_starts_with_name", new FilterStartsWithName(udp,asker,serverCommands));
+            commands.put("reg",new Register(udp,asker,serverCommands));
+            commands.put("auth",new Authorize(udp,asker,serverCommands));
             commands.put("help",new Help(commands));
 
 

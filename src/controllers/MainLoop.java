@@ -53,9 +53,10 @@ public class MainLoop extends ControlLoop{
                     this.commands.get(commandName).execute(commandInput);
                 } else {
                     try {
-                     this.commands.get(commandName).execute(commandInput);
+                     boolean res = this.commands.get(commandName).execute(commandInput);
+                     if (!res) {printIndication();continue;}
                      JSONObject response =  Serialization.DeserializeObject(udp.recivePacket().getData());
-                     System.out.println(response.get("responseText"));
+                     if (response.get("responseText") != null) System.out.println(response.get("responseText"));
                      printIndication();
                     }
                     catch (SocketTimeoutException e){

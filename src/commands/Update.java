@@ -4,6 +4,7 @@ import customexceptions.IncorrectDataInScript;
 import network.UDP;
 import org.json.simple.JSONObject;
 import utilities.Asker;
+import utilities.Serialization;
 
 import java.io.IOException;
 
@@ -22,7 +23,12 @@ public class Update extends Command{
     public boolean execute(String[] arguments) throws IOException {
         JSONObject jsonHuman;
         try{
-            int id = Integer.parseInt(arguments[1]);
+            udp.sendJSONPacket(serverCommands.get("owner"),arguments[1],new JSONObject(),false);
+            JSONObject response =  Serialization.DeserializeObject(udp.recivePacket().getData());
+            boolean res = (boolean)response.get("status");
+            if (!res){
+                System.out.println("У вас нет прав к этому объекту!");
+                return false;}
             jsonHuman = asker.askHumanBeing();
             udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],jsonHuman,false);
             return true;
@@ -40,6 +46,8 @@ public class Update extends Command{
         catch (NumberFormatException e){
             System.out.println("ID представляет собой число.");
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return false;
     }

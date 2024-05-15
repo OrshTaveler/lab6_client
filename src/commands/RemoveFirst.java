@@ -30,7 +30,7 @@ public class RemoveFirst extends Command{
     @Override
     public boolean execute(String[] arguments) {
         try{
-            udp.sendJSONPacket(serverCommands.get(this.getName()),null,null,false);
+            udp.sendJSONPacket(serverCommands.get(this.getName()),null,new JSONObject(),false);
         }
         catch (IndexOutOfBoundsException e){
             return false;

@@ -89,5 +89,29 @@ public class Asker {
         return humanBeing;
     }
 
+    public JSONObject askAuth(){
+        JSONObject userData  = new JSONObject();
+
+        if(!fromScript) System.out.print("Логин:");
+        String login = inputGetter.getString();
+        userData.put("login",login);
+
+        if(!fromScript) System.out.print("Пароль :");
+        String password = inputGetter.getString();
+        userData.put("password",password);
+
+        return userData;
+    }
+    public  boolean askTypeOfConnection(){
+        if(!fromScript) System.out.print(">");
+        String type = inputGetter.getString();
+        if (type.equals("auth")) return false;
+        else if (type.equals("reg")) {return true;}
+        else {
+            if(!fromScript) System.out.println("Введите reg или auth");
+            return askTypeOfConnection();
+        }
+    }
+
 
 }

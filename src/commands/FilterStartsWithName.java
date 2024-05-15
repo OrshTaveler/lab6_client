@@ -32,7 +32,7 @@ public class FilterStartsWithName extends Command {
     public boolean execute(String[] arguments) {
         JSONObject jsonHuman;
         try{
-            udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],null,false);
+            udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],new JSONObject(),false);
             return true;
         }
         catch (IOException e) {

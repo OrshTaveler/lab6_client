@@ -36,7 +36,7 @@ public class RemoveAnyByWeaponType extends Command{
         try{
             String weaponType = arguments[1];
             WeaponType weaponType1 = WeaponType.valueOf(weaponType);
-            udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],null,false);
+            udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],new JSONObject(),false);
             return true;
         }
         catch (IllegalArgumentException e){

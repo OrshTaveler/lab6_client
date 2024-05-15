@@ -33,7 +33,7 @@ public class RemoveById extends Command{
     public boolean execute(String[] arguments) {
         try{
             int id = Integer.parseInt(arguments[1]);
-            udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],null,false);
+            udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],new JSONObject(),false);
             return true;
         }
         catch (ArrayIndexOutOfBoundsException e){
