@@ -30,4 +30,9 @@ public class Clear extends Command{
         udp.sendJSONPacket(serverCommands.get(this.getName()),null,new JSONObject(),false);
         return true;
     }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
+    }
 }

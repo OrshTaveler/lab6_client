@@ -27,4 +27,9 @@ public class Register extends  Command{
         udp.sendJSONPacket(serverCommands.get(this.getName()),null,authData,false);
         return true;
     }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
+    }
 }

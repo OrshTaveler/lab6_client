@@ -39,4 +39,9 @@ public class RemoveFirst extends Command{
         }
         return true;
     }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
+    }
 }

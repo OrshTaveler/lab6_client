@@ -15,13 +15,11 @@ import java.io.IOException;
 
 public class Add extends Command{
 
-    private Asker asker;
     private UDP udp;
     private JSONObject serverCommands;
 
-    public Add(UDP udp, Asker asker,JSONObject serverCommands){
+    public Add(UDP udp,JSONObject serverCommands){
         super("add","Добавляет людей в списочек");
-        this.asker = asker;
         this.udp = udp;
         this.serverCommands = serverCommands;
     }
@@ -31,18 +29,16 @@ public class Add extends Command{
      * */
     @Override
     public boolean execute(String[] arguments) {
-        JSONObject jsonHuman;
+        return false;
+    }
+
+    @Override
+    public boolean execute(JSONObject jsonHuman) throws IOException {
         try{
-            jsonHuman = asker.askHumanBeing();
             udp.sendJSONPacket(serverCommands.get(this.getName()),null,jsonHuman,false);
             return true;
-        }
-         catch (IncorrectDataInScript e){
-             System.out.println("При добавлении нового HumanBeing произошла ошибка с комментарием - "+e.getMessage()+", проверьте скрипт");
-
-         } catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
 }

@@ -50,4 +50,9 @@ public class RemoveAt extends Command{
         }
 
     }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
+    }
 }

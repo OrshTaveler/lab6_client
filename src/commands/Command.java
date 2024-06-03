@@ -21,7 +21,8 @@ public abstract class Command {
     public String getDescription(){
         return description;
     }
-    public abstract boolean execute(String[] arguments) throws IOException;
+    public abstract boolean  execute(String[] arguments) throws IOException;
+    public abstract boolean execute(JSONObject arguments) throws IOException;
 
 
 }

@@ -45,4 +45,9 @@ public class FilterStartsWithName extends Command {
 
 
     }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
+    }
 }

@@ -56,6 +56,7 @@ public class MainLoop extends ControlLoop{
                      boolean res = this.commands.get(commandName).execute(commandInput);
                      if (!res) {printIndication();continue;}
                      JSONObject response =  Serialization.DeserializeObject(udp.recivePacket().getData());
+                     System.out.println(response);
                      if (response.get("responseText") != null) System.out.println(response.get("responseText"));
                      printIndication();
                     }

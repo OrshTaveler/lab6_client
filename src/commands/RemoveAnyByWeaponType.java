@@ -55,4 +55,9 @@ public class RemoveAnyByWeaponType extends Command{
         return false;
 
     }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
+    }
 }

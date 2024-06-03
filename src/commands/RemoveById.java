@@ -14,14 +14,13 @@ import java.util.NoSuchElementException;
  * @author Ubica228
  */
 public class RemoveById extends Command{
-    private Asker asker;
+
     private UDP udp;
     private JSONObject serverCommands;
 
 
-    public RemoveById(UDP udp, Asker asker, JSONObject serverCommands){
+    public RemoveById(UDP udp, JSONObject serverCommands){
         super("remove_by_id","Удаляет людей по ID");
-        this.asker = asker;
         this.udp = udp;
         this.serverCommands = serverCommands;
     }
@@ -33,6 +32,7 @@ public class RemoveById extends Command{
     public boolean execute(String[] arguments) {
         try{
             int id = Integer.parseInt(arguments[1]);
+            System.out.println(arguments[1]);
             udp.sendJSONPacket(serverCommands.get(this.getName()),arguments[1],new JSONObject(),false);
             return true;
         }
@@ -50,5 +50,10 @@ public class RemoveById extends Command{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
     }
 }

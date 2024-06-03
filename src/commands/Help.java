@@ -1,5 +1,8 @@
 package commands;
 
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
 import java.util.Map;
 /**
  * Команда 'help'. Выводит описание всех команд.
@@ -22,5 +25,10 @@ public class Help extends  Command{
            System.out.print(">");
        }
        return true;
+    }
+
+    @Override
+    public boolean execute(JSONObject arguments) throws IOException {
+        return false;
     }
 }

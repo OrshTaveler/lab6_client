@@ -62,7 +62,7 @@ public class UDP {
 
 
     }
-    public JSONObject initialConnect(int count,UDP udp) throws IOException, ClassNotFoundException {
+    public JSONObject initialConnect(int count,boolean typeOfConnection,String login,String password) throws IOException, ClassNotFoundException {
         try{
 
          System.out.println("Подключаемся к серверу (попытка "+ (count+1)+")");
@@ -73,34 +73,34 @@ public class UDP {
          System.out.println("Для регистрации введите reg\nДля авторизации введите auth");
 
          JSONObject authData;
-         boolean typeOfConnection = asker.askTypeOfConnection();
-         while (true) {
+
             if (typeOfConnection) {
-                Command reg = new Register(udp, asker, (JSONObject) initialConnectData.get("data"));
-                reg.execute(null);
+                Command reg = new Register(this, asker, (JSONObject) initialConnectData.get("data"));
+                reg.execute(new String[]{login,password});
             } else {
-                Command auth = new Authorize(udp, asker, (JSONObject) initialConnectData.get("data"));
-                auth.execute(null);
+                Command auth = new Authorize(this, (JSONObject) initialConnectData.get("data"));
+                auth.execute(new String[]{login,password});
             }
             DatagramPacket authPacket = this.recivePacket();
             authData = Serialization.DeserializeObject(authPacket.getData());
-            if ((Boolean) authData.get("status")) break;
+            if (!(Boolean) authData.get("status")) {
              if (typeOfConnection) {
                  System.out.println("Не зарегисрировали попробуйте ещё раз!");
              } else {
                 System.out.println("Не авторизовались попробуйте ещё раз!");
              }
+             return null;
+            }
 
-        }
-        JSONObject tokenData = (JSONObject) authData.get("data");
+            JSONObject tokenData = (JSONObject) authData.get("data");
          TOKEN  = (String) tokenData.get("token");
-         System.out.println(authData.get("responseText"));
+
          return initialConnectData;
      }
         catch (SocketTimeoutException e){
             count+=1;
             if (count >= MAX_CONNECTION_RETRY ) throw new RuntimeException(e);
-            return initialConnect(count,udp);
+            return initialConnect(count,typeOfConnection,login,password);
         }
     }
 }
